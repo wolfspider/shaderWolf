@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <title>Blended Texture Effects</title>
 <script>
-    "use strict";
+   "use strict";
 
     var parameters = { start_time: new Date().getTime(), time: 0, aspectX: 265 / 415, aspectY: 1, screenWidth: 265, screenHeight: 415 };
 
@@ -188,6 +188,7 @@
 
     function loadImage(url, callback) {
         var image = new Image();
+        image.crossOrigin = "anonymous";
         image.src = url;
         image.onload = callback;
         return image;
@@ -215,9 +216,9 @@
 
     function main() {
 
-        loadImages(["coil.jpg",
-                         "webgl.png",
-                         "chaos_coil.jpg",
+        loadImages(["http://3.bp.blogspot.com/_2CnQWIZQ3NY/SA_dvx5iQnI/AAAAAAAAAwo/vjmG1yXurmw/s320/coil.jpg",
+                    "http://3.bp.blogspot.com/_2CnQWIZQ3NY/SA_dvx5iQnI/AAAAAAAAAwo/vjmG1yXurmw/s320/coil.jpg",
+                    "http://3.bp.blogspot.com/_2CnQWIZQ3NY/SA_dvx5iQnI/AAAAAAAAAwo/vjmG1yXurmw/s320/coil.jpg",
                          ], render);
     }
 
@@ -356,6 +357,7 @@
                             x2, y2]), gl.STATIC_DRAW);
     }
 
+
 </script>
 <!-- vertex shader -->
 <script id="2d-vertex-shader" type="x-shader/x-vertex">
@@ -382,7 +384,7 @@ void main() {
    // The GPU will interpolate this value between points.
    texCoord = a_texCoord;
 }
-</script></script>
+</script>
 <!-- fragment shader -->
 <script id="2d-fragment-shader" type="x-shader/x-fragment">
 #ifdef GL_FRAGMENT_PRECISION_HIGH
@@ -443,7 +445,7 @@ void main(void)
     
     blurSample = blurSample / vec4(64,64,64,64);
 
-    vec4 result = blend + blurSample*0.75;
+    vec4 result = blend - blurSample*0.75;
 
     result = clamp(result, 0.0, 1.0);
 
