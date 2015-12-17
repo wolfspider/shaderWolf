@@ -216,7 +216,7 @@
         loadImages(["monster.png",
                          ], render);
     }
-    function render() {
+    function render(images) {
         // Get A WebGL context
         var canvas = document.getElementById("canvas");
         var gl = getWebGLContext(canvas);
@@ -248,11 +248,7 @@
         gl.vertexAttribPointer(texCoordLocation, 2, gl.FLOAT, false, 0, 0);
         // create array of textures
         var textures = [];
-        
-        var monsterImage = new Image();
-        monsterImage.crossOrigin = "anonymous";
-        monsterImage.src = "monster.png";
-        
+           
         //for (var ii = 0; ii < 3; ++ii) {
             var texture = gl.createTexture();
             gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -262,7 +258,9 @@
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
             // Upload the image into the texture.
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, monsterImage);
+            
+            //if(texLoaded)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, images[0]);
             // add the texture to the array of textures.
             textures.push(texture);
         //}
